@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок - Академия Лобачевой Анны</title>
+    
+    <!-- 🌸 Fonts for Beauty Industry -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- 🎯 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- 💎 Modern Styles -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- ⚡ Bootstrap 5.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a class="navbar-brand" href="index.html">
+                <span class="navbar-brand-main">LOBACHEVA</span>
+                <span class="navbar-brand-sub">ACADEMY</span>
+            </a>
+            
+            <ul class="navbar-nav">
+                <li><a class="nav-link" href="dashboard.html">Обучение</a></li>
+                <li><a class="nav-link" href="tests.html">Тесты</a></li>
+                <li><a class="nav-link" href="profile.html">Профиль</a></li>
+                <li><a class="nav-link btn" href="#" onclick="logout()">Выйти</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container dashboard">
+        <p class="text-muted mb-lg">
+            <a href="dashboard.html" style="color: var(--text-secondary);">Обучение</a> 
+            <i class="fas fa-chevron-right" style="font-size: 0.75rem; margin: 0 var(--spacing-sm);"></i>
+            <a href="lessons.html" style="color: var(--text-secondary);">Уроки</a> 
+            <i class="fas fa-chevron-right" style="font-size: 0.75rem; margin: 0 var(--spacing-sm);"></i>
+            <span id="lessonBreadcrumb">Урок</span>
+        </p>
+        
+        <div class="grid" style="grid-template-columns: 1fr 300px;">
+            <div class="card">
+                <div class="card-body">
+                    <h1 id="lessonTitle">Загрузка...</h1>
+                    <hr style="border-color: var(--glass-border); margin: var(--spacing-lg) 0;">
+                    
+                    <div id="lessonContent">
+                        <p>Загрузка урока...</p>
+                    </div>
+                    
+                    <div class="mt-xl pt-xl" style="border-top: 1px solid var(--glass-border);">
+                        <button class="btn btn-primary btn-lg w-100" id="completeLessonBtn" onclick="completeLesson()">
+                            <i class="fas fa-check-circle"></i> Завершить урок
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <div class="card mb-lg">
+                    <div class="card-body">
+                        <h5>Информация</h5>
+                        <div class="d-flex align-center gap-md mb-md">
+                            <i class="fas fa-clock" style="color: var(--color-accent);"></i>
+                            <span>Время чтения: <span id="readingTime">~10 мин</span></span>
+                        </div>
+                        <div class="d-flex align-center gap-md">
+                            <i class="fas fa-book" style="color: var(--color-accent);"></i>
+                            <span>Модуль: <span id="moduleInfo">-</span></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-body">
+                        <h5>Навигация</h5>
+                        <div id="lessonNavigation">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="text-center">
+                <p>&copy; 2024 Академия Лобачевой Анны. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="lesson.js"></script>
+</body>
+</html>

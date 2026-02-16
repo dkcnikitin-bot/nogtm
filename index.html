@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Академия Лобачевой Анны - Инструкторский курс</title>
+    
+    <!-- 🌸 Fonts for Beauty Industry -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- 🎯 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- 💎 Modern Styles -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- ⚡ Bootstrap 5.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="navbar-container">
+            <a class="navbar-brand" href="index.html">
+                <span class="navbar-brand-main">LOBACHEVA</span>
+                <span class="navbar-brand-sub">ACADEMY</span>
+            </a>
+            
+            <button class="navbar-toggler" id="navbarToggler" type="button">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <ul class="navbar-nav" id="navbarNav">
+                <li><a class="nav-link" href="#about">О курсе</a></li>
+                <li><a class="nav-link" href="#modules">Программа</a></li>
+                <li><a class="nav-link" href="#features">Преимущества</a></li>
+                <li><a class="nav-link" href="#contact">Контакты</a></li>
+                <li><a class="nav-link" href="diagnostics.html"><i class="fas fa-cog"></i></a></li>
+                <li><a class="nav-link btn" href="login.html" id="authNavBtn">Войти</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-sparkles"></i>
+                    <span>Профессиональное обучение</span>
+                </div>
+                <h1 class="hero-title">
+                    <span class="text-gradient">Инструкторский курс</span><br>
+                    для мастеров ногтевой индустрии
+                </h1>
+                <p class="hero-subtitle">
+                    Полная подготовка к профессиональной деятельности инструктора. 
+                    От основ педагогики до открытия собственной школы маникюра.
+                </p>
+                <div class="hero-features">
+                    <div class="hero-feature">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>10 модулей</span>
+                    </div>
+                    <div class="hero-feature">
+                        <i class="fas fa-certificate"></i>
+                        <span>Сертификат</span>
+                    </div>
+                    <div class="hero-feature">
+                        <i class="fas fa-hands-helping"></i>
+                        <span>Практика</span>
+                    </div>
+                    <div class="hero-feature">
+                        <i class="fas fa-infinity"></i>
+                        <span>Доступ навсегда</span>
+                    </div>
+                </div>
+                <div class="hero-actions">
+                    <a href="login.html" class="btn btn-primary btn-lg">
+                        <i class="fas fa-spa"></i>
+                        Войти в кабинет
+                    </a>
+                    <a href="#modules" class="btn btn-secondary btn-lg">
+                        <i class="fas fa-book-open"></i>
+                        Программа курса
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">О курсе</div>
+                <h2 class="section-title">Комплексная подготовка</h2>
+                <p class="section-subtitle">Профессиональных инструкторов ногтевой индустрии</p>
+            </div>
+            <div class="grid grid-2">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Станьте востребованным инструктором</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            Наш курс разработан опытными педагогами и практиками ногтевой индустрии. 
+                            Вы получите не только теоретические знания, но и практические навыки 
+                            проведения занятий, работы с учениками и ведения собственного бизнеса.
+                        </p>
+                        <ul style="list-style: none; padding: 0; margin-top: var(--spacing-lg);">
+                            <li class="d-flex align-center gap-md mb-md">
+                                <i class="fas fa-heart" style="color: var(--color-accent);"></i>
+                                <span>Методика преподавания</span>
+                            </li>
+                            <li class="d-flex align-center gap-md mb-md">
+                                <i class="fas fa-heart" style="color: var(--color-accent);"></i>
+                                <span>Психология обучения</span>
+                            </li>
+                            <li class="d-flex align-center gap-md mb-md">
+                                <i class="fas fa-heart" style="color: var(--color-accent);"></i>
+                                <span>Юридическое оформление</span>
+                            </li>
+                            <li class="d-flex align-center gap-md mb-md">
+                                <i class="fas fa-heart" style="color: var(--color-accent);"></i>
+                                <span>Маркетинг и продвижение</span>
+                            </li>
+                            <li class="d-flex align-center gap-md">
+                                <i class="fas fa-heart" style="color: var(--color-accent);"></i>
+                                <span>Практика на реальных учениках</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <h4 class="card-title">Автор курса</h4>
+                        <p class="card-subtitle">Анна Лобачева</p>
+                        <p>
+                            Профессиональный инструктор с многолетним опытом работы. 
+                            Автор методик обучения, подготовившая сотни успешных мастеров.
+                        </p>
+                        <div class="d-flex justify-center gap-md mt-lg">
+                            <span style="background: var(--gradient-primary); color: white; padding: 6px 16px; border-radius: 20px; font-size: var(--font-size-sm); font-weight: 500;">10+ лет опыта</span>
+                            <span style="background: var(--gradient-primary); color: white; padding: 6px 16px; border-radius: 20px; font-size: var(--font-size-sm); font-weight: 500;">500+ выпускников</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="modules" class="section" style="background: var(--glass-bg); backdrop-filter: blur(20px);">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">Программа</div>
+                <h2 class="section-title">10 модулей курса</h2>
+                <p class="section-subtitle">Полный курс подготовки профессионального инструктора</p>
+            </div>
+            <div class="grid grid-3" id="modulesList">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <i class="fas fa-spa fa-spin fa-2x" style="color: var(--color-accent);"></i>
+                        <p class="mt-md">Загрузка модулей...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">Преимущества</div>
+                <h2 class="section-title">Почему выбирают нас</h2>
+                <p class="section-subtitle">Мы создали идеальные условия для вашего обучения</p>
+            </div>
+            <div class="grid grid-3">
+                <div class="card feature-card">
+                    <div class="card-body">
+                        <div class="feature-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <h4 class="card-title">Видеоуроки высокого качества</h4>
+                        <p>Профессиональная съёмка каждого этапа работы с детальными пояснениями</p>
+                    </div>
+                </div>
+                <div class="card feature-card">
+                    <div class="card-body">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h4 class="card-title">Поддержка куратора</h4>
+                        <p>Персональный куратор на протяжении всего курса обучения</p>
+                    </div>
+                </div>
+                <div class="card feature-card">
+                    <div class="card-body">
+                        <div class="feature-icon">
+                            <i class="fas fa-infinity"></i>
+                        </div>
+                        <h4 class="card-title">Пожизненный доступ</h4>
+                        <p>Доступ к материалам курса навсегда после завершения обучения</p>
+                    </div>
+                </div>
+                <div class="card feature-card">
+                    <div class="card-body">
+                        <div class="feature-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <h4 class="card-title">Официальный сертификат</h4>
+                        <p>Документ о повышении квалификации установленного образца</p>
+                    </div>
+                </div>
+                <div class="card feature-card">
+                    <div class="card-body">
+                        <div class="feature-icon">
+                            <i class="fas fa-hand-sparkles"></i>
+                        </div>
+                        <h4 class="card-title">Практика с моделями</h4>
+                        <p>Отработка навыков на реальных моделях под руководством преподавателя</p>
+                    </div>
+                </div>
+                <div class="card feature-card">
+                    <div class="card-body">
+                        <div class="feature-icon">
+                            <i class="fas fa-store"></i>
+                        </div>
+                        <h4 class="card-title">Помощь в открытии бизнеса</h4>
+                        <p>Содействие в поиске работы или открытии собственной школы</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section" style="background: var(--glass-bg); backdrop-filter: blur(20px);">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge">Контакты</div>
+                <h2 class="section-title">Свяжитесь с нами</h2>
+                <p class="section-subtitle">Готовы ответить на все ваши вопросы</p>
+            </div>
+            <div class="d-flex justify-center">
+                <div class="card" style="max-width: 500px; width: 100%;">
+                    <div class="card-header">
+                        <h3 class="card-title">Оставить заявку</h3>
+                    </div>
+                    <div class="card-body">
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <label class="form-label">Ваше имя</label>
+                                <input type="text" class="form-control" placeholder="Введите имя" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" placeholder="email@example.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Сообщение</label>
+                                <textarea class="form-control" rows="4" placeholder="Ваше сообщение" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="fas fa-paper-plane"></i>
+                                Отправить
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="grid grid-3 mb-xl">
+                <div>
+                    <h5>LOBACHEVA ACADEMY</h5>
+                    <p>Профессиональная подготовка инструкторов ногтевой индустрии</p>
+                </div>
+                <div>
+                    <h5>Навигация</h5>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="#about">О курсе</a></li>
+                        <li><a href="#modules">Программа</a></li>
+                        <li><a href="#contact">Контакты</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Контакты</h5>
+                    <p><i class="fas fa-envelope me-2"></i>info@lobacheva-academy.ru</p>
+                    <p><i class="fas fa-phone me-2"></i>+7 (999) 123-45-67</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Академия Лобачевой Анны. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="data-init.js"></script>
+    <script src="app.js"></script>
+    
+    <script>
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        const navbarToggler = document.getElementById('navbarToggler');
+        const navbarNav = document.getElementById('navbarNav');
+        navbarToggler.addEventListener('click', () => {
+            if (navbarNav.style.display === 'flex') {
+                navbarNav.style.display = 'none';
+            } else {
+                navbarNav.style.display = 'flex';
+                navbarNav.style.flexDirection = 'column';
+                navbarNav.style.position = 'absolute';
+                navbarNav.style.top = '80px';
+                navbarNav.style.left = '0';
+                navbarNav.style.width = '100%';
+                navbarNav.style.background = 'var(--glass-bg)';
+                navbarNav.style.backdropFilter = 'blur(20px)';
+                navbarNav.style.padding = 'var(--spacing-lg)';
+            }
+        });
+
+        document.getElementById('contactForm')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Спасибо за заявку! Мы свяжемся с вами в ближайшее время.');
+            e.target.reset();
+        });
+    </script>
+</body>
+</html>

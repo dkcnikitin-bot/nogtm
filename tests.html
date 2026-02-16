@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тесты - Академия Лобачевой Анны</title>
+    
+    <!-- 🌸 Fonts for Beauty Industry -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- 🎯 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- 💎 Modern Styles -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- ⚡ Bootstrap 5.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a class="navbar-brand" href="index.html">
+                <span class="navbar-brand-main">LOBACHEVA</span>
+                <span class="navbar-brand-sub">ACADEMY</span>
+            </a>
+            
+            <ul class="navbar-nav">
+                <li><a class="nav-link" href="dashboard.html">Обучение</a></li>
+                <li><a class="nav-link" href="tests.html">Тесты</a></li>
+                <li><a class="nav-link" href="profile.html">Профиль</a></li>
+                <li><a class="nav-link btn" href="#" onclick="logout()">Выйти</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="dashboard-header">
+        <div class="container">
+            <h2>Тестирование</h2>
+            <p class="mb-0 text-muted">Проверьте свои знания после изучения модулей</p>
+        </div>
+    </div>
+
+    <div class="container dashboard">
+        <div class="mb-xl">
+            <div class="card">
+                <div class="card-header">
+                    <h4><i class="fas fa-clipboard-list" style="color: var(--color-accent);"></i> Доступные тесты</h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted mb-0">Пройдите тесты для закрепления материала</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="testsContainer" class="grid grid-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="fas fa-spa fa-spin fa-2x" style="color: var(--color-accent);"></i>
+                    <p class="mt-md">Загрузка тестов...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-xl">
+            <div class="card-header">
+                <h4><i class="fas fa-chart-bar" style="color: var(--color-accent);"></i> Ваши результаты</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Тест</th>
+                                <th>Балл</th>
+                                <th>Дата</th>
+                                <th>Статус</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultsTable">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="text-center">
+                <p>&copy; 2024 Академия Лобачевой Анны. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="tests.js"></script>
+</body>
+</html>

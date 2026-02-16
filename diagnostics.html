@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Диагностика Firebase | Академия Анны Лобачевой</title>
+    
+    <!-- 🌸 Fonts for Beauty Industry -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body style="background: var(--bg-primary); min-height: 100vh; padding: 2rem;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="text-center mb-5">
+                            <i class="fas fa-stethoscope fa-3x mb-3" style="color: var(--color-accent);"></i>
+                            <h1>Диагностика Firebase</h1>
+                            <p class="text-muted">Проверка подключения и конфигурации</p>
+                        </div>
+
+                        <!-- Статус подключения -->
+                        <div class="mb-4">
+                            <h5 class="mb-3"><i class="fas fa-plug me-2"></i>Статус подключения</h5>
+                            <div id="connectionStatus" class="alert alert-secondary">
+                                <i class="fas fa-spinner fa-spin me-2"></i>Проверка...
+                            </div>
+                        </div>
+
+                        <!-- Конфигурация -->
+                        <div class="mb-4">
+                            <h5 class="mb-3"><i class="fas fa-cog me-2"></i>Конфигурация</h5>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>API Key:</strong></td>
+                                            <td id="configApiKey">-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Auth Domain:</strong></td>
+                                            <td id="configAuthDomain">-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Database URL:</strong></td>
+                                            <td id="configDatabaseURL">-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Project ID:</strong></td>
+                                            <td id="configProjectId">-</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Проверка сервисов -->
+                        <div class="mb-4">
+                            <h5 class="mb-3"><i class="fas fa-server me-2"></i>Сервисы Firebase</h5>
+                            <div id="servicesStatus" class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="card">
+                                        <div class="card-body text-center">
+                                            <i class="fas fa-database fa-2x mb-2" style="color: var(--color-accent);"></i>
+                                            <h6>Realtime Database</h6>
+                                            <span id="dbStatus" class="badge bg-secondary">Проверка...</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="card">
+                                        <div class="card-body text-center">
+                                            <i class="fas fa-user-shield fa-2x mb-2" style="color: var(--color-accent);"></i>
+                                            <h6>Authentication</h6>
+                                            <span id="authStatus" class="badge bg-secondary">Проверка...</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Проверка данных -->
+                        <div class="mb-4">
+                            <h5 class="mb-3"><i class="fas fa-database me-2"></i>Данные в базе</h5>
+                            <div id="dataStatus" class="row">
+                                <div class="col-md-4 mb-3">
+                                    <div class="card">
+                                        <div class="card-body text-center">
+                                            <i class="fas fa-book fa-2x mb-2" style="color: var(--color-accent);"></i>
+                                            <h6>Модули</h6>
+                                            <span id="modulesCount" class="badge bg-secondary">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card">
+                                        <div class="card-body text-center">
+                                            <i class="fas fa-file-alt fa-2x mb-2" style="color: var(--color-accent);"></i>
+                                            <h6>Уроки</h6>
+                                            <span id="lessonsCount" class="badge bg-secondary">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card">
+                                        <div class="card-body text-center">
+                                            <i class="fas fa-clipboard-question fa-2x mb-2" style="color: var(--color-accent);"></i>
+                                            <h6>Тесты</h6>
+                                            <span id="testsCount" class="badge bg-secondary">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Администратор -->
+                        <div class="mb-4">
+                            <h5 class="mb-3"><i class="fas fa-user-tie me-2"></i>Администратор</h5>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p><strong>Email:</strong> <code>admin@lobacheva-academy.ru</code></p>
+                                            <p><strong>Пароль:</strong> <code>Admin2024!</code></p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p><strong>Статус:</strong> <span id="adminStatus" class="badge bg-secondary">Проверка...</span></p>
+                                            <button id="createAdminBtn" class="btn btn-primary btn-sm mt-2" onclick="createAdminFromDiagnostics()">
+                                                <i class="fas fa-plus me-1"></i>Создать администратора
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Инициализация данных -->
+                        <div class="mb-4">
+                            <h5 class="mb-3"><i class="fas fa-download me-2"></i>Инициализация данных</h5>
+                            <div class="card">
+                                <div class="card-body">
+                                    <p class="text-muted mb-3">Создаст 10 модулей, 25+ уроков и тесты</p>
+                                    <button id="initDataBtn" class="btn btn-primary" onclick="initializeDataFromDiagnostics()">
+                                        <i class="fas fa-play me-2"></i>Инициализировать данные
+                                    </button>
+                                    <div id="initProgress" class="mt-3 d-none">
+                                        <div class="progress">
+                                            <div id="initProgressBar" class="progress-bar" style="width: 0%"></div>
+                                        </div>
+                                        <small id="initStatus" class="text-muted">Подготовка...</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Лог -->
+                        <div class="mb-4">
+                            <h5 class="mb-3"><i class="fas fa-terminal me-2"></i>Лог</h5>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div id="logContainer" style="max-height: 350px; overflow-y: auto; font-family: monospace; font-size: 0.875rem; background: var(--bg-tertiary); padding: 1rem; border-radius: var(--border-radius-md); border: 1px solid var(--glass-border);">
+                                        <div class="text-muted">Ожидание проверки...</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Кнопки действий -->
+                        <div class="text-center">
+                            <a href="index.html" class="btn btn-secondary">
+                                <i class="fas fa-home me-2"></i>На главную
+                            </a>
+                            <a href="login.html" class="btn btn-primary">
+                                <i class="fas fa-sign-in-alt me-2"></i>Войти
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="data-init.js"></script>
+    <script>
+        // Логирование
+        function log(message, type = 'info') {
+            const logContainer = document.getElementById('logContainer');
+            const timestamp = new Date().toLocaleTimeString();
+            const colors = {
+                'info': 'text-info',
+                'success': 'text-success',
+                'warning': 'text-warning',
+                'error': 'text-danger'
+            };
+            const icon = {
+                'info': 'ℹ️',
+                'success': '✅',
+                'warning': '⚠️',
+                'error': '❌'
+            };
+            
+            const logEntry = document.createElement('div');
+            logEntry.className = colors[type] || '';
+            logEntry.innerHTML = `<span class="text-muted">[${timestamp}]</span> ${icon[type]} ${message}`;
+            logContainer.appendChild(logEntry);
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+
+        // Проверка конфигурации
+        function checkConfig() {
+            log('Проверка конфигурации Firebase...', 'info');
+            
+            try {
+                if (typeof firebaseConfig === 'undefined') {
+                    log('firebaseConfig не найден!', 'error');
+                    return false;
+                }
+                
+                document.getElementById('configApiKey').textContent = firebaseConfig.apiKey || 'Не задан';
+                document.getElementById('configAuthDomain').textContent = firebaseConfig.authDomain || 'Не задан';
+                document.getElementById('configDatabaseURL').textContent = firebaseConfig.databaseURL || 'Не задан';
+                document.getElementById('configProjectId').textContent = firebaseConfig.projectId || 'Не задан';
+                
+                if (!firebaseConfig.apiKey || firebaseConfig.apiKey === 'AIzaSyYOUR_API_KEY') {
+                    log('API Key не настроен!', 'warning');
+                    return false;
+                }
+                
+                log('Конфигурация загружена', 'success');
+                return true;
+            } catch (error) {
+                log('Ошибка проверки конфигурации: ' + error.message, 'error');
+                return false;
+            }
+        }
+
+        // Проверка подключения к Firebase
+        async function checkConnection() {
+            log('Проверка подключения к Firebase...', 'info');
+            
+            try {
+                if (!firebase.apps.length) {
+                    log('Firebase не инициализирован', 'error');
+                    document.getElementById('connectionStatus').className = 'alert alert-danger';
+                    document.getElementById('connectionStatus').innerHTML = '<i class="fas fa-times-circle me-2"></i>Firebase не инициализирован';
+                    return false;
+                }
+                
+                log('Firebase инициализирован', 'success');
+                document.getElementById('connectionStatus').className = 'alert alert-success';
+                document.getElementById('connectionStatus').innerHTML = '<i class="fas fa-check-circle me-2"></i>Подключено к Firebase';
+                return true;
+            } catch (error) {
+                log('Ошибка подключения: ' + error.message, 'error');
+                document.getElementById('connectionStatus').className = 'alert alert-danger';
+                document.getElementById('connectionStatus').innerHTML = '<i class="fas fa-times-circle me-2"></i>Ошибка подключения: ' + error.message;
+                return false;
+            }
+        }
+
+        // Проверка сервисов
+        async function checkServices() {
+            log('Проверка сервисов Firebase...', 'info');
+            
+            try {
+                await db.ref('.info/connected').once('value');
+                log('Realtime Database: доступен', 'success');
+                document.getElementById('dbStatus').className = 'badge bg-success';
+                document.getElementById('dbStatus').textContent = 'Доступен';
+            } catch (error) {
+                log('Realtime Database: ошибка - ' + error.message, 'error');
+                document.getElementById('dbStatus').className = 'badge bg-danger';
+                document.getElementById('dbStatus').textContent = 'Ошибка';
+            }
+            
+            try {
+                auth.onAuthStateChanged(() => {});
+                log('Authentication: доступен', 'success');
+                document.getElementById('authStatus').className = 'badge bg-success';
+                document.getElementById('authStatus').textContent = 'Доступен';
+            } catch (error) {
+                log('Authentication: ошибка - ' + error.message, 'error');
+                document.getElementById('authStatus').className = 'badge bg-danger';
+                document.getElementById('authStatus').textContent = 'Ошибка';
+            }
+        }
+
+        // Проверка данных
+        async function checkData() {
+            log('Проверка данных в базе...', 'info');
+            
+            try {
+                const modulesSnapshot = await db.ref('modules').once('value');
+                const modulesCount = modulesSnapshot.exists() ? Object.keys(modulesSnapshot.val()).length : 0;
+                document.getElementById('modulesCount').textContent = modulesCount;
+                document.getElementById('modulesCount').className = modulesCount > 0 ? 'badge bg-success' : 'badge bg-warning';
+                log(`Модулей: ${modulesCount}`, modulesCount > 0 ? 'success' : 'warning');
+                
+                const lessonsSnapshot = await db.ref('lessons').once('value');
+                const lessonsCount = lessonsSnapshot.exists() ? Object.keys(lessonsSnapshot.val()).length : 0;
+                document.getElementById('lessonsCount').textContent = lessonsCount;
+                document.getElementById('lessonsCount').className = lessonsCount > 0 ? 'badge bg-success' : 'badge bg-warning';
+                log(`Уроков: ${lessonsCount}`, lessonsCount > 0 ? 'success' : 'warning');
+                
+                const testsSnapshot = await db.ref('tests').once('value');
+                const testsCount = testsSnapshot.exists() ? Object.keys(testsSnapshot.val()).length : 0;
+                document.getElementById('testsCount').textContent = testsCount;
+                document.getElementById('testsCount').className = testsCount > 0 ? 'badge bg-success' : 'badge bg-warning';
+                log(`Тестов: ${testsCount}`, testsCount > 0 ? 'success' : 'warning');
+            } catch (error) {
+                log('Ошибка проверки данных: ' + error.message, 'error');
+            }
+        }
+
+        // Проверка администратора
+        async function checkAdmin() {
+            log('Проверка администратора...', 'info');
+            
+            try {
+                const usersSnapshot = await db.ref('users').orderByChild('email').equalTo('admin@lobacheva-academy.ru').once('value');
+                
+                if (usersSnapshot.exists()) {
+                    log('Администратор существует', 'success');
+                    document.getElementById('adminStatus').className = 'badge bg-success';
+                    document.getElementById('adminStatus').textContent = 'Существует';
+                    document.getElementById('createAdminBtn').disabled = true;
+                    document.getElementById('createAdminBtn').textContent = 'Администратор создан';
+                } else {
+                    log('Администратор не найден', 'warning');
+                    document.getElementById('adminStatus').className = 'badge bg-warning';
+                    document.getElementById('adminStatus').textContent = 'Не создан';
+                }
+            } catch (error) {
+                log('Ошибка проверки администратора: ' + error.message, 'error');
+                document.getElementById('adminStatus').className = 'badge bg-danger';
+                document.getElementById('adminStatus').textContent = 'Ошибка';
+            }
+        }
+
+        // Создание администратора (из diagnostics.html)
+        async function createAdminFromDiagnostics() {
+            const btn = document.getElementById('createAdminBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Создание...';
+            
+            log('Создание администратора...', 'info');
+            
+            try {
+                try {
+                    const userCredential = await auth.createUserWithEmailAndPassword('admin@lobacheva-academy.ru', 'Admin2024!');
+                    const userId = userCredential.user.uid;
+
+                    await db.ref('users/' + userId).set({
+                        name: 'Анна',
+                        surname: 'Лобачева',
+                        email: 'admin@lobacheva-academy.ru',
+                        role: 'admin',
+                        createdAt: new Date().toISOString()
+                    });
+
+                    log('Администратор создан успешно!', 'success');
+                } catch (createError) {
+                    if (createError.code === 'auth/email-already-in-use') {
+                        log('Пользователь уже существует в Auth. Входим в систему...', 'info');
+
+                        const userCredential = await auth.signInWithEmailAndPassword('admin@lobacheva-academy.ru', 'Admin2024!');
+                        const userId = userCredential.user.uid;
+
+                        const existingUser = await db.ref('users/' + userId).once('value');
+
+                        if (!existingUser.exists()) {
+                            await db.ref('users/' + userId).set({
+                                name: 'Анна',
+                                surname: 'Лобачева',
+                                email: 'admin@lobacheva-academy.ru',
+                                role: 'admin',
+                                createdAt: new Date().toISOString()
+                            });
+
+                            log('Администратор добавлен в базу данных!', 'success');
+                        } else {
+                            log('Администратор уже существует в базе данных', 'warning');
+                        }
+
+                        await auth.signOut();
+                    } else {
+                        throw createError;
+                    }
+                }
+
+                document.getElementById('adminStatus').className = 'badge bg-success';
+                document.getElementById('adminStatus').textContent = 'Создан';
+                btn.innerHTML = '<i class="fas fa-check me-1"></i>Создано';
+            } catch (error) {
+                log('Ошибка создания администратора: ' + error.message, 'error');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-plus me-1"></i>Создать администратора';
+            }
+        }
+
+        // Инициализация данных (из diagnostics.html)
+        async function initializeDataFromDiagnostics() {
+            const btn = document.getElementById('initDataBtn');
+            const progress = document.getElementById('initProgress');
+            const progressBar = document.getElementById('initProgressBar');
+            const status = document.getElementById('initStatus');
+            
+            btn.disabled = true;
+            progress.classList.remove('d-none');
+            
+            log('Начинаем инициализацию данных...', 'info');
+            
+            try {
+                // Проверяем доступность функций
+                log('Проверка доступности функций...', 'info');
+                
+                // Ждем загрузки data-init.js
+                let attempts = 0;
+                const maxAttempts = 10;
+                
+                while (typeof window.dataInit_initializeApp !== 'function' && attempts < maxAttempts) {
+                    log('Ожидание загрузки data-init.js... (' + (attempts + 1) + '/' + maxAttempts + ')', 'info');
+                    await new Promise(resolve => setTimeout(resolve, 300));
+                    attempts++;
+                }
+                
+                if (typeof window.dataInit_initializeApp === 'function') {
+                    status.textContent = 'Инициализация...';
+                    progressBar.style.width = '20%';
+                    
+                    const result = await window.dataInit_initializeApp();
+                    
+                    if (result.dataInitialized && result.adminCreated) {
+                        progressBar.style.width = '100%';
+                        status.textContent = 'Готово!';
+                        log('Инициализация завершена успешно!', 'success');
+                        
+                        setTimeout(() => {
+                            checkData();
+                            checkAdmin();
+                        }, 1000);
+                    } else {
+                        progressBar.style.width = '50%';
+                        status.textContent = 'Частично завершено';
+                        log('Инициализация завершена частично', 'warning');
+                    }
+                } else {
+                    log('❌ Скрипт data-init.js не загружен!', 'error');
+                    log('Проверьте консоль браузера (F12)', 'warning');
+                    status.textContent = 'Ошибка';
+                    progressBar.style.width = '0%';
+                }
+            } catch (error) {
+                log('❌ Ошибка инициализации: ' + error.message, 'error');
+                if (error.stack) {
+                    log('Стек ошибки: ' + error.stack, 'error');
+                }
+                status.textContent = 'Ошибка: ' + error.message;
+                progressBar.style.width = '0%';
+            }
+            
+            btn.disabled = false;
+        }
+
+        // Главная функция диагностики
+        async function runDiagnostics() {
+            log('=== Начало диагностики ===', 'info');
+            
+            const configOk = checkConfig();
+            if (!configOk) {
+                log('Конфигурация некорректна. Пожалуйста, настройте Firebase.', 'error');
+                return;
+            }
+            
+            const connected = await checkConnection();
+            if (!connected) {
+                log('Не удалось подключиться к Firebase.', 'error');
+                return;
+            }
+            
+            await checkServices();
+            await checkData();
+            await checkAdmin();
+            
+            log('=== Диагностика завершена ===', 'info');
+            log('Если все проверки прошли успешно, вы можете войти в систему', 'success');
+        }
+
+        // Запуск при загрузке страницы
+        window.addEventListener('load', () => {
+            log('Страница загружена. Запуск диагностики...', 'info');
+            setTimeout(runDiagnostics, 500);
+        });
+    </script>
+</body>
+</html>

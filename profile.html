@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль - Академия Лобачевой Анны</title>
+    
+    <!-- 🌸 Fonts for Beauty Industry -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- 🎯 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- 💎 Modern Styles -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- ⚡ Bootstrap 5.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a class="navbar-brand" href="index.html">
+                <span class="navbar-brand-main">LOBACHEVA</span>
+                <span class="navbar-brand-sub">ACADEMY</span>
+            </a>
+            
+            <ul class="navbar-nav">
+                <li><a class="nav-link" href="dashboard.html">Обучение</a></li>
+                <li><a class="nav-link" href="tests.html">Тесты</a></li>
+                <li><a class="nav-link" href="profile.html">Профиль</a></li>
+                <li><a class="nav-link btn" href="#" onclick="logout()">Выйти</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="dashboard-header">
+        <div class="container">
+            <h2>Мой профиль</h2>
+            <p class="mb-0 text-muted">Управление личными данными</p>
+        </div>
+    </div>
+
+    <div class="container dashboard">
+        <div class="grid grid-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <div style="width: 100px; height: 100px; background: var(--gradient-soft); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--spacing-lg);">
+                        <i class="fas fa-user" style="font-size: 2.5rem; color: var(--color-accent);"></i>
+                    </div>
+                    <h4 id="profileName">Загрузка...</h4>
+                    <p class="text-muted" id="profileEmail">...</p>
+                    <div class="mt-lg">
+                        <span style="background: var(--gradient-primary); color: white; padding: 6px 16px; border-radius: 20px; font-size: var(--font-size-sm); font-weight: 500;">Ученик</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h4>Статистика</h4>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-between align-center mb-md">
+                        <span><i class="fas fa-book" style="color: var(--color-accent);"></i> Прогресс:</span>
+                        <strong id="profileProgress">0%</strong>
+                    </div>
+                    <div class="d-flex justify-between align-center mb-md">
+                        <span><i class="fas fa-clipboard-check" style="color: var(--color-accent);"></i> Пройдено уроков:</span>
+                        <strong id="completedLessons">0</strong>
+                    </div>
+                    <div class="d-flex justify-between align-center">
+                        <span><i class="fas fa-award" style="color: var(--color-accent);"></i> Пройдено тестов:</span>
+                        <strong id="completedTests">0</strong>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h4>Быстрые действия</h4>
+                </div>
+                <div class="card-body">
+                    <a href="dashboard.html" class="btn btn-secondary w-100 mb-md">
+                        <i class="fas fa-graduation-cap"></i>
+                        Перейти к обучению
+                    </a>
+                    <a href="tests.html" class="btn btn-secondary w-100">
+                        <i class="fas fa-clipboard-question"></i>
+                        Пройти тесты
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-2 mt-xl">
+            <div class="card">
+                <div class="card-header">
+                    <h4><i class="fas fa-edit" style="color: var(--color-accent);"></i> Редактирование профиля</h4>
+                </div>
+                <div class="card-body">
+                    <form id="profileForm">
+                        <div class="form-group">
+                            <label class="form-label">Имя</label>
+                            <input type="text" class="form-control" id="editName" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Фамилия</label>
+                            <input type="text" class="form-control" id="editSurname" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" id="editEmail" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Телефон</label>
+                            <input type="tel" class="form-control" id="editPhone">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-save"></i> Сохранить изменения
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h4><i class="fas fa-lock" style="color: var(--color-accent);"></i> Смена пароля</h4>
+                </div>
+                <div class="card-body">
+                    <form id="passwordForm">
+                        <div class="form-group">
+                            <label class="form-label">Текущий пароль</label>
+                            <input type="password" class="form-control" id="currentPassword" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Новый пароль</label>
+                            <input type="password" class="form-control" id="newPassword" required minlength="6">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Подтвердите новый пароль</label>
+                            <input type="password" class="form-control" id="confirmPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-key"></i> Изменить пароль
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="text-center">
+                <p>&copy; 2024 Академия Лобачевой Анны. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="profile.js"></script>
+</body>
+</html>

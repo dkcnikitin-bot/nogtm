@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель - Академия Лобачевой Анны</title>
+    
+    <!-- 🌸 Fonts for Beauty Industry -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- 🎯 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- 💎 Modern Styles -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- ⚡ Bootstrap 5.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="admin-layout">
+        <aside class="admin-sidebar">
+            <div class="admin-sidebar-logo">
+                <span style="font-size: 1.5rem; font-family: var(--font-display); font-weight: 500; color: var(--text-primary);">LOBACHEVA</span>
+                <span style="font-size: 0.6rem; color: var(--color-secondary); letter-spacing: 2px; text-transform: uppercase; font-weight: 600;">ACADEMY</span>
+            </div>
+            <ul class="admin-nav">
+                <li class="admin-nav-item">
+                    <a href="#" class="admin-nav-link active" data-section="dashboard">
+                        <i class="fas fa-home"></i>
+                        <span>Главная</span>
+                    </a>
+                </li>
+                <li class="admin-nav-item">
+                    <a href="#" class="admin-nav-link" data-section="students">
+                        <i class="fas fa-users"></i>
+                        <span>Ученики</span>
+                    </a>
+                </li>
+                <li class="admin-nav-item">
+                    <a href="#" class="admin-nav-link" data-section="modules">
+                        <i class="fas fa-book"></i>
+                        <span>Модули</span>
+                    </a>
+                </li>
+                <li class="admin-nav-item">
+                    <a href="#" class="admin-nav-link" data-section="lessons">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Уроки</span>
+                    </a>
+                </li>
+                <li class="admin-nav-item">
+                    <a href="#" class="admin-nav-link" data-section="tests">
+                        <i class="fas fa-clipboard-question"></i>
+                        <span>Тесты</span>
+                    </a>
+                </li>
+                <li class="admin-nav-item" style="margin-top: var(--spacing-2xl);">
+                    <a href="index.html" class="admin-nav-link">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Выйти</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <main class="admin-content">
+            <div class="d-flex justify-between align-center mb-xl">
+                <div>
+                    <h2 id="pageTitle">Панель управления</h2>
+                    <p class="text-muted mb-0">Добро пожаловать, Анна</p>
+                </div>
+                <button class="btn btn-primary" onclick="refreshData()">
+                    <i class="fas fa-sync-alt"></i>
+                    Обновить
+                </button>
+            </div>
+
+            <section id="dashboardSection" class="admin-section">
+                <div class="stats-grid">
+                    <div class="card stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-value" id="totalStudents">0</div>
+                        <div class="stat-label">Всего учеников</div>
+                    </div>
+                    <div class="card stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="stat-value" id="totalModules">10</div>
+                        <div class="stat-label">Модулей</div>
+                    </div>
+                    <div class="card stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <div class="stat-value" id="completedTests">0</div>
+                        <div class="stat-label">Пройдено тестов</div>
+                    </div>
+                    <div class="card stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-percent"></i>
+                        </div>
+                        <div class="stat-value" id="avgScore">0%</div>
+                        <div class="stat-label">Средний балл</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Последние регистрации</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-container">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Имя</th>
+                                        <th>Email</th>
+                                        <th>Дата регистрации</th>
+                                        <th>Прогресс</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recentStudents">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="studentsSection" class="admin-section d-none">
+                <div class="card">
+                    <div class="card-header d-flex justify-between align-center">
+                        <h4>Управление учениками</h4>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStudentModal">
+                            <i class="fas fa-plus"></i>
+                            Добавить ученика
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-container">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Имя</th>
+                                        <th>Email</th>
+                                        <th>Телефон</th>
+                                        <th>Прогресс</th>
+                                        <th>Статус</th>
+                                        <th>Действия</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="studentsList">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="modulesSection" class="admin-section d-none">
+                <div class="card">
+                    <div class="card-header d-flex justify-between align-center">
+                        <h4>Модули курса</h4>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModuleModal">
+                            <i class="fas fa-plus"></i>
+                            Добавить модуль
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div id="modulesList" class="grid grid-2">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="lessonsSection" class="admin-section d-none">
+                <div class="card">
+                    <div class="card-header d-flex justify-between align-center">
+                        <h4>Уроки</h4>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addLessonModal">
+                            <i class="fas fa-plus"></i>
+                            Добавить урок
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <select class="form-control" id="moduleFilter" onchange="loadLessons()">
+                                <option value="">Все модули</option>
+                            </select>
+                        </div>
+                        <div class="table-container">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Название</th>
+                                        <th>Модуль</th>
+                                        <th>Содержание</th>
+                                        <th>Действия</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="lessonsList">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="testsSection" class="admin-section d-none">
+                <div class="card">
+                    <div class="card-header d-flex justify-between align-center">
+                        <h4>Тесты</h4>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTestModal">
+                            <i class="fas fa-plus"></i>
+                            Добавить тест
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-container">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Название</th>
+                                        <th>Модуль</th>
+                                        <th>Вопросов</th>
+                                        <th>Действия</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="testsList">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div class="modal" id="addStudentModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="card-title">Добавить ученика</h5>
+                    <button type="button" class="modal-close" data-bs-dismiss="modal"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addStudentForm">
+                        <div class="form-group">
+                            <label class="form-label">Имя</label>
+                            <input type="text" class="form-control" id="studentName" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Фамилия</label>
+                            <input type="text" class="form-control" id="studentSurname" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" id="studentEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Телефон</label>
+                            <input type="tel" class="form-control" id="studentPhone" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Пароль</label>
+                            <input type="password" class="form-control" id="studentPassword" required minlength="6">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Добавить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="addModuleModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="card-title">Добавить модуль</h5>
+                    <button type="button" class="modal-close" data-bs-dismiss="modal"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addModuleForm">
+                        <div class="form-group">
+                            <label class="form-label">Название</label>
+                            <input type="text" class="form-control" id="moduleName" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Описание</label>
+                            <textarea class="form-control" id="moduleDescription" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Порядковый номер</label>
+                            <input type="number" class="form-control" id="moduleOrder" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Добавить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="addLessonModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="card-title">Добавить урок</h5>
+                    <button type="button" class="modal-close" data-bs-dismiss="modal"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addLessonForm">
+                        <div class="form-group">
+                            <label class="form-label">Название</label>
+                            <input type="text" class="form-control" id="lessonName" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Модуль</label>
+                            <select class="form-control" id="lessonModule" required>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Содержание</label>
+                            <textarea class="form-control" id="lessonContent" rows="10" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Добавить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>
