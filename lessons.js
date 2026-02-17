@@ -1,96 +1,241 @@
-// Проверка авторизации
-auth.onAuthStateChanged((user) => {
-    if (!user) {
-        window.location.href = 'login.html';
-    } else {
-        loadModule();
-    }
+/* ============================================================
+   📚 LESSONS.JS - Module Lessons Logic
+   Enhanced with animations and better UX
+   ============================================================ */
+
+// ============================================================
+// INITIALIZATION
+// ============================================================
+
+document.addEventListener('DOMContentLoaded', () => {
+    initLessonsPage();
 });
 
-// Загрузка модуля и уроков
-function loadModule() {
-    const moduleId = localStorage.getItem('selectedModule');
+function initLessonsPage() {
+    console.log('📚 Загрузка страницы уроков...');
     
-    if (!moduleId) {
-        window.location.href = 'dashboard.html';
-        return;
-    }
+    // Show loading
+    showLessonsLoading();
     
-    // Загружаем информацию о модуле
-    db.ref(DB_PATHS.MODULES + '/' + moduleId).once('value', (snapshot) => {
-        const module = snapshot.val();
-        if (module) {
-            document.getElementById('moduleName').textContent = module.name || 'Модуль';
-            document.getElementById('moduleTitle').textContent = module.name || 'Название модуля';
+    // Check authentication
+    auth.onAuthStateChanged((user) => {
+        if (!user) {
+            toast.warning('Необходимо авторизоваться');
+            window.location.href = 'login.html';
+        } else {
+            loadModuleData();
         }
     });
-    
-    // Загружаем уроки модуля
-    db.ref(DB_PATHS.LESSONS).orderByChild('moduleId').equalTo(moduleId).once('value', (snapshot) => {
-        const lessons = snapshot.val() || {};
-        const container = document.getElementById('lessonsContainer');
-        
-        if (Object.keys(lessons).length === 0) {
-            container.innerHTML = `
-                <div class="text-center py-5">
-                    <i class="fas fa-book-open fa-3x text-muted mb-3"></i>
-                    <p class="text-muted">В этом модуле пока нет уроков</p>
-                </div>
-            `;
+}
+
+// ============================================================
+// LOADING STATES
+// ============================================================
+
+function showLessonsLoading() {
+    const container = DOM.find('#lessonsContainer');
+    if (container) {
+        Loading.skeleton(container, 4);
+    }
+}
+
+function hideLessonsLoading() {
+    const container = DOM.find('#lessonsContainer');
+    if (container) {
+        Loading.removeSkeletons(container);
+    }
+}
+
+// ============================================================
+// LOAD MODULE DATA
+// ============================================================
+
+async function loadModuleData() {
+    try {
+        const moduleId = Storage.get('selectedModule');
+
+        if (!moduleId) {
+            toast.warning('Модуль не выбран');
+            window.location.href = 'dashboard.html';
             return;
         }
         
-        container.innerHTML = Object.entries(lessons).map(([id, lesson]) => `
-            <div class="lesson-card" id="lesson-${id}">
-                <div class="d-flex justify-content-between align-items-start">
-                    <div>
-                        <h5>${lesson.name || 'Урок'}</h5>
-                        <p class="text-muted mb-2">${(lesson.content || '').substring(0, 200)}...</p>
-                        <small class="text-muted">
-                            <i class="fas fa-clock"></i> 
-                            ${Math.ceil((lesson.content || '').length / 500)} мин чтения
-                        </small>
+        // Load module info
+        await loadModuleInfo(moduleId);
+
+        // Load lessons
+        await loadLessons(moduleId);
+
+        // Hide loading
+        hideLessonsLoading();
+
+        console.log('✅ Уроки загружены');
+    } catch (error) {
+        hideLessonsLoading();
+        ErrorHandler.handle(error, 'lessons loading');
+    }
+}
+
+// ============================================================
+// LOAD MODULE INFO
+// ============================================================
+
+async function loadModuleInfo(moduleId) {
+    const snapshot = await db.ref(DB_PATHS.MODULES + '/' + moduleId).once('value');
+    const module = snapshot.val();
+
+    if (module) {
+        const moduleName = DOM.find('#moduleName');
+        const moduleTitle = DOM.find('#moduleTitle');
+        const moduleDescription = DOM.find('#moduleDescription');
+
+        if (moduleName) DOM.text(moduleName, module.name || 'Модуль');
+        if (moduleTitle) DOM.text(moduleTitle, module.name || 'Название модуля');
+        if (moduleDescription) DOM.html(moduleDescription, module.description || '');
+
+        // Animate module title
+        if (moduleTitle) {
+            Animation.fadeInUp(moduleTitle, 400);
+        }
+    }
+}
+
+// ============================================================
+// LOAD LESSONS
+// ============================================================
+
+async function loadLessons(moduleId) {
+    const snapshot = await db.ref(DB_PATHS.LESSONS).orderByChild('moduleId').equalTo(moduleId).once('value');
+    const lessons = snapshot.val() || {};
+    const container = DOM.find('#lessonsContainer');
+
+    if (!container) return;
+
+    if (Object.keys(lessons).length === 0) {
+        DOM.html(container, `
+            <div class="text-center py-5 fade-in">
+                <div class="feature-icon mb-lg" style="width: 100px; height: 100px;">
+                    <i class="fas fa-book-open" style="font-size: 3rem;"></i>
+                </div>
+                <h3>Уроки пока не добавлены</h3>
+                <p class="text-muted">Контент появится в ближайшее время</p>
+                <button class="btn btn-secondary mt-lg" onclick="window.location.href='dashboard.html'">
+                    <i class="fas fa-arrow-left"></i>
+                    Вернуться к модулям
+                </button>
+            </div>
+        `);
+        return;
+    }
+
+    // Sort lessons by order
+    const sortedLessons = Object.entries(lessons)
+        .sort((a, b) => (a[1].order || 0) - (b[1].order || 0));
+
+    DOM.html(container, sortedLessons.map(([id, lesson], index) => {
+        const readingTime = Formatter.readingTime(lesson.content || '');
+        const delayClass = `stagger-${(index % 5) + 1}`;
+
+        return `
+            <div class="lesson-card fade-in-up ${delayClass}" id="lesson-${id}">
+                <div class="d-flex justify-between align-start gap-lg">
+                    <div style="flex: 1;">
+                        <div class="d-flex align-center gap-md mb-md">
+                            <span class="badge bg-primary">Урок ${index + 1}</span>
+                            <span class="text-muted" style="font-size: var(--font-size-sm);">
+                                <i class="fas fa-clock"></i>
+                                ${readingTime} мин чтения
+                            </span>
+                        </div>
+                        <h4 style="font-family: var(--font-heading); font-size: var(--font-size-xl); font-weight: 600; margin-bottom: var(--spacing-sm);">
+                            ${lesson.name || 'Урок'}
+                        </h4>
+                        <p class="text-muted" style="line-height: 1.6;">
+                            ${Formatter.truncate(lesson.content || 'Описание урока', 150)}
+                        </p>
                     </div>
                     <button class="btn btn-primary" onclick="openLesson('${id}')">
-                        <i class="fas fa-play"></i> Начать
+                        <i class="fas fa-play"></i>
+                        Начать
                     </button>
                 </div>
             </div>
-        `).join('');
-        
-        // Загружаем прогресс уроков
-        loadLessonsProgress();
-    });
-}
+        `;
+    }).join(''));
 
-// Загрузка прогресса уроков
-function loadLessonsProgress() {
-    const userId = auth.currentUser.uid;
-    db.ref(DB_PATHS.PROGRESS + '/' + userId + '/completedLessons').once('value', (snapshot) => {
-        const completedLessons = snapshot.val() || {};
-        
-        Object.keys(completedLessons).forEach(lessonId => {
-            const lessonCard = document.getElementById('lesson-' + lessonId);
-            if (lessonCard) {
-                lessonCard.classList.add('completed');
-                lessonCard.querySelector('button').innerHTML = `
-                    <i class="fas fa-check"></i> Пройдено
-                `;
-                lessonCard.querySelector('button').disabled = true;
-            }
+    // Trigger animations
+    requestAnimationFrame(() => {
+        const cards = DOM.findAll('.lesson-card');
+        cards.forEach((card, index) => {
+            setTimeout(() => {
+                DOM.addClass(card, 'animate-in');
+            }, index * 100);
         });
     });
+
+    // Load progress
+    await loadLessonsProgress();
 }
 
-// Открытие урока
-function openLesson(lessonId) {
-    localStorage.setItem('selectedLesson', lessonId);
-    window.location.href = 'lesson.html';
-}
+// ============================================================
+// LOAD LESSONS PROGRESS
+// ============================================================
 
-// Выход
-function logout() {
-    auth.signOut().then(() => {
-        window.location.href = 'login.html';
+async function loadLessonsProgress() {
+    const userId = auth.currentUser.uid;
+    const snapshot = await db.ref(DB_PATHS.PROGRESS + '/' + userId + '/completedLessons').once('value');
+    const completedLessons = snapshot.val() || {};
+
+    Object.keys(completedLessons).forEach(lessonId => {
+        const lessonCard = DOM.find(`#lesson-${lessonId}`);
+        if (lessonCard) {
+            DOM.addClass(lessonCard, 'completed');
+            
+            const button = lessonCard.querySelector('button');
+            if (button) {
+                DOM.html(button, '<i class="fas fa-check"></i> Пройдено');
+                button.disabled = true;
+                DOM.removeClass(button, 'btn-primary');
+                DOM.addClass(button, 'btn-success');
+            }
+        }
     });
 }
+
+// ============================================================
+// OPEN LESSON
+// ============================================================
+
+function openLesson(lessonId) {
+    Storage.set('selectedLesson', lessonId);
+    
+    // Add transition effect
+    const container = DOM.find('.lessons');
+    if (container) {
+        container.style.opacity = '0';
+        container.style.transform = 'translateY(20px)';
+        container.style.transition = 'all 0.3s ease';
+    }
+
+    setTimeout(() => {
+        window.location.href = 'lesson.html';
+    }, 300);
+}
+
+// ============================================================
+// BACK TO MODULES
+// ============================================================
+
+function backToModules() {
+    Storage.remove('selectedModule');
+    window.location.href = 'dashboard.html';
+}
+
+// ============================================================
+// GLOBAL FUNCTIONS
+// ============================================================
+
+window.openLesson = openLesson;
+window.backToModules = backToModules;
+
+console.log('📚 Lessons.js загружен');
